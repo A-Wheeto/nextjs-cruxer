@@ -22,40 +22,43 @@ export default function Header() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+        
         {/* Collapsible nav links */}
         <div className="collapse navbar-collapse justify-content-end" id="navbarToggler">
-          <ul className="navbar-nav mb-2 mb-lg-0">
-            {status === 'loading' ? (
-              <li className="nav-item">
-                <span className={`nav-link ${styles.link}`}>Loading...</span>
+          <ul className="navbar-nav">
+            {session ? (
+              <li className="nav-item dropdown">
+                <a 
+                  className={`nav-link dropdown-toggle ${styles.link}`}
+                  href="#" 
+                  id="userDropdown" 
+                  role="button" 
+                  data-bs-toggle="dropdown" 
+                  aria-expanded="false"
+                >
+                  {session.user.username || session.user.name}
+                </a>
+                <ul className="dropdown-menu dropdown-menu-end mt-3" aria-labelledby="userDropdown">
+                  <li>
+                    <button 
+                      className="dropdown-item"
+                      onClick={() => signOut()}
+                    >
+                      Sign out
+                    </button>
+                  </li>
+                </ul>
               </li>
-            ) : session ? (
-              <>
-                <li className="nav-item">
-                  <span className={`nav-link ${styles.link}`}>
-                    Hello, {session.user.username}!
-                  </span>
-                </li>
-                <li className="nav-item">
-                  <button 
-                    className={`nav-link btn btn-link ${styles.link}`}
-                    onClick={() => signOut()}
-                    style={{ border: 'none', background: 'none', padding: '0.5rem 1rem' }}
-                  >
-                    SIGN OUT
-                  </button>
-                </li>
-              </>
             ) : (
               <>
                 <li className="nav-item">
                   <Link href="/auth/signin" className={`nav-link ${styles.link}`}>
-                    LOGIN
+                    Login
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link href="/auth/signup" className={`nav-link ${styles.link}`}>
-                    CREATE AN ACCOUNT
+                    Create an account
                   </Link>
                 </li>
               </>

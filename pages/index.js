@@ -22,7 +22,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-    
+      
+      <section className="py-5 bg-light text-center">
+        <div className="container">
+          <h1 className="display-4 fw-bold">C R U <span className={`${styles.title_x}`}>&#10007;</span> E R</h1>
+          <p className="lead text-muted">
+            Cruxer is the ultimate social app for climbers. Track your ascents, connect with other climbers, and discover new routes — all in one place.
+          </p>
+          <a href="#signup" className="btn btn-primary btn-lg mt-3">Join the Community</a>
+        </div>
+      </section>
+
     </>
   );
 }
