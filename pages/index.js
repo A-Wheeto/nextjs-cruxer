@@ -42,17 +42,26 @@ export default function Home({ cards }) {
         </div>
       </section>
 
-      <div className="row mt-2 g-4">
+      <section className="row mt-2 g-4 mb-4">
         {cards.map((card) => (
           <div key={card.id} className="col-12 col-md-4 card-group">
             <Card
               title={card.title}
               description={card.description}
               link={card.link}
+              image={card.image}
             />
           </div>
         ))}
-      </div>
+      </section>
+
+      <section className={`${styles.home_section} py-4 text-center rounded-3`}>
+        <div className="container">
+          <h3 className="display-8 mb-0">
+            Some more text about climbing and how cool it is.
+          </h3>
+        </div>
+      </section>
     </>
   );
 }

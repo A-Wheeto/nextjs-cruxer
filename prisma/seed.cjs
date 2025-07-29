@@ -7,17 +7,20 @@ async function main() {
       {
         title: "Track Your Ascents",
         description: "Log your climbs effortlessly and keep detailed records of each route you conquer. Monitor your progress over time with stats and personal bests to stay motivated and improve your skills.",
-        link: "/log"
+        link: "/log",
+        image: "/images/ascent.jpg"
       },
       {
         title: "Connect with Climbers",
         description: "Meet and interact with fellow climbing enthusiasts from around the world. Share tips, organize meetups, and build your climbing community both online and offline.",
-        link: "/community"
+        link: "/community",
+        image: "/images/connect.jpg"
       },
       {
         title: "Discover New Routes",
         description: "Explore new climbing routes tailored to your skill level and location. Get recommendations, user reviews, and detailed route information to find your next adventure.",
-        link: "/map"
+        link: "/map",
+        image: "/images/discover.jpg"
       }
     ],
   });

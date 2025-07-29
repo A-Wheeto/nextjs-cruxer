@@ -62,5 +62,6 @@ model HomePageCard {
   title       String
   description String
   link        String
+  image       String
   createdAt   DateTime @default(now())
 }
