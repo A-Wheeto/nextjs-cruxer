@@ -1,19 +1,28 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
 import styles from "@/styles/Home.module.css";
+import Link from "next/link";
+import Card from "@/components/ui/Card";
+import { PrismaClient } from "@prisma/client";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+const prisma = new PrismaClient();
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+export async function getServerSideProps() {
+  const cards = await prisma.homePageCard.findMany({
+    orderBy: {createdAt: "asc"}
+  });
 
-export default function Home() {
+  const serializedCards = cards.map(card => ({
+    ...card,
+    createdAt: card.createdAt.toISOString(),
+  }));
+
+  return {
+    props: { cards: serializedCards },
+  }
+}
+
+export default function Home({ cards }) {
   return (
     <>
       <Head>
@@ -23,16 +32,27 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <section className="py-5 bg-light text-center">
+      <section className={`${styles.home_section} py-4 text-center rounded-3`}>
         <div className="container">
           <h1 className="display-4 fw-bold">C R U <span className={`${styles.title_x}`}>&#10007;</span> E R</h1>
-          <p className="lead text-muted">
+          <h3 className="display-8 mb-4">
             Cruxer is the ultimate social app for climbers. Track your ascents, connect with other climbers, and discover new routes — all in one place.
-          </p>
-          <a href="#signup" className="btn btn-primary btn-lg mt-3">Join the Community</a>
+          </h3>
+          <Link href="/auth/signup" className={`${styles.link} px-5 py-2 mt-4 fw-bold`}>Join the Community</Link>
         </div>
       </section>
 
+      <div className="row mt-2 g-4">
+        {cards.map((card) => (
+          <div key={card.id} className="col-12 col-md-4 card-group">
+            <Card
+              title={card.title}
+              description={card.description}
+              link={card.link}
+            />
+          </div>
+        ))}
+      </div>
     </>
   );
 }
