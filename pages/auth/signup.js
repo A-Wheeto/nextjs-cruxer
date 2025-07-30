@@ -1,6 +1,7 @@
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import styles from "../../styles/site.module.css";
 
 export default function SignUp() {
   const [name, setName] = useState('')
@@ -49,7 +50,7 @@ export default function SignUp() {
   return (
     <div className="row justify-content-center">
       <div className="col-md-6 col-lg-4">
-        <div className="card">
+        <div className={`card ${styles.section}`}>
           <div className="card-body">
             <h2 className="card-title text-center mb-4">Sign Up</h2>
             
@@ -64,7 +65,7 @@ export default function SignUp() {
                 <label htmlFor="name" className="form-label">Full Name</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={`form-control ${styles.border}`}
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -76,7 +77,7 @@ export default function SignUp() {
                 <label htmlFor="username" className="form-label">Username</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={`form-control ${styles.border}`}
                   id="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -91,7 +92,7 @@ export default function SignUp() {
                 <label htmlFor="email" className="form-label">Email</label>
                 <input
                   type="email"
-                  className="form-control"
+                  className={`form-control ${styles.border}`}
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -103,7 +104,7 @@ export default function SignUp() {
                 <label htmlFor="password" className="form-label">Password</label>
                 <input
                   type="password"
-                  className="form-control"
+                  className={`form-control ${styles.border}`}
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -112,11 +113,11 @@ export default function SignUp() {
                 />
               </div>
 
-              <div className="mb-3">
+              <div className="mb-4">
                 <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
                 <input
                   type="password"
-                  className="form-control"
+                  className={`form-control ${styles.border}`}
                   id="confirmPassword"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -126,7 +127,7 @@ export default function SignUp() {
 
               <button
                 type="submit"
-                className="btn btn-primary w-100"
+                className={`btn w-100 ${styles.background_color}`}
                 disabled={loading}
               >
                 {loading ? 'Creating account...' : 'Sign Up'}

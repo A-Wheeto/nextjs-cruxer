@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { signIn, getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import styles from "../../styles/site.module.css"
 
 export default function SignIn() {
   const [emailOrUsername, setEmailOrUsername] = useState('')
@@ -37,7 +38,7 @@ export default function SignIn() {
   return (
     <div className="row justify-content-center">
       <div className="col-md-6 col-lg-4">
-        <div className="card">
+        <div className={`card ${styles.section}`}>
           <div className="card-body">
             <h2 className="card-title text-center mb-4">Sign In</h2>
             
@@ -58,7 +59,7 @@ export default function SignIn() {
                 <label htmlFor="emailOrUsername" className="form-label">Email or Username</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={`form-control ${styles.border}`}
                   id="emailOrUsername"
                   value={emailOrUsername}
                   onChange={(e) => setEmailOrUsername(e.target.value)}
@@ -66,11 +67,11 @@ export default function SignIn() {
                 />
               </div>
 
-              <div className="mb-3">
+              <div className="mb-4">
                 <label htmlFor="password" className="form-label">Password</label>
                 <input
                   type="password"
-                  className="form-control"
+                  className={`form-control ${styles.border}`}
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -80,7 +81,7 @@ export default function SignIn() {
 
               <button
                 type="submit"
-                className="btn btn-primary w-100"
+                className={`btn w-100 ${styles.background_color}`}
                 disabled={loading}
               >
                 {loading ? 'Signing in...' : 'Sign In'}

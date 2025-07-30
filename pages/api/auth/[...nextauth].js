@@ -6,7 +6,7 @@ import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
-export default NextAuth({
+export const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -44,6 +44,7 @@ export default NextAuth({
           email: user.email,
           name: user.name,
           username: user.username,
+          image: user.image || null,
         }
       }
     })
@@ -59,6 +60,7 @@ export default NextAuth({
       if (session?.user) {
         session.user.id = token.sub;
         session.user.username = token.username;
+        session.user.image = token.image;
       }
       return session;
     },
@@ -66,8 +68,11 @@ export default NextAuth({
       if (user) {
         token.sub = user.id;
         token.username = user.username;
+        token.image = user.image;
       }
       return token;
     },
   },
-})
+}
+
+export default NextAuth(authOptions);

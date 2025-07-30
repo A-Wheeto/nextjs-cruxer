@@ -29,7 +29,7 @@ export default function Header() {
             {session ? (
               <li className="nav-item dropdown">
                 <a 
-                  className={`nav-link p-2 dropdown-toggle ${styles.link}`}
+                  className={`nav-link p-2 mx-0 dropdown-toggle ${styles.link}`}
                   href="#" 
                   id="userDropdown" 
                   role="button" 
@@ -39,6 +39,11 @@ export default function Header() {
                   {session.user.username || session.user.name}
                 </a>
                 <ul className={`${styles.dropdown_menu} dropdown-menu dropdown-menu-end mt-3`} aria-labelledby="userDropdown">
+                  <li>
+                    <Link href="/profile" className="dropdown-item">
+                      Profile
+                    </Link>
+                  </li>
                   <li>
                     <button 
                       className="dropdown-item"
