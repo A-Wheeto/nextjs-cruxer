@@ -2,35 +2,192 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 async function main() {
+  // Seed HomePageCards without duplicates
   await prisma.homePageCard.createMany({
     data: [
       {
         title: "Track Your Ascents",
-        description: "Log your climbs effortlessly and keep detailed records of each route you conquer. Monitor your progress over time with stats and personal bests to stay motivated and improve your skills.",
+        description:
+          "Log your climbs effortlessly and keep detailed records of each route you conquer. Monitor your progress over time with stats and personal bests to stay motivated and improve your skills.",
         link: "/log",
-        image: "/images/ascent.jpg"
+        image: "/images/ascent.jpg",
       },
       {
         title: "Connect with Climbers",
-        description: "Meet and interact with fellow climbing enthusiasts from around the world. Share tips, organize meetups, and build your climbing community both online and offline.",
+        description:
+          "Meet and interact with fellow climbing enthusiasts from around the world. Share tips, organize meetups, and build your climbing community both online and offline.",
         link: "/community",
-        image: "/images/connect.jpg"
+        image: "/images/connect.jpg",
       },
       {
         title: "Discover New Routes",
-        description: "Explore new climbing routes tailored to your skill level and location. Get recommendations, user reviews, and detailed route information to find your next adventure.",
+        description:
+          "Explore new climbing routes tailored to your skill level and location. Get recommendations, user reviews, and detailed route information to find your next adventure.",
         link: "/map",
-        image: "/images/discover.jpg"
-      }
+        image: "/images/discover.jpg",
+      },
     ],
+    skipDuplicates: true, // This prevents errors if records already exist
   });
 
-  console.log("✅ Seeded homepage cards!");
+  console.log("✅ HomePageCards seeded (no duplicates)");
+
+  // Seed ClimbingGyms (create or update)
+  const gyms = [
+    {
+      name: "The Reach Climbing Centre",
+      location: "London, England",
+      description: "Large indoor facility with top rope, lead, bouldering, and speed walls. Hosts regular competitions and training clinics.",
+      email: "info@thereachclimbing.co.uk",
+      phoneNumber: "020-7123-4567",
+    },
+    {
+      name: "BlocHaus Sheffield",
+      location: "Sheffield, England",
+      description: "Bouldering-focused gym with spray walls, café, and strength area, set in the heart of the Peak District climbing scene.",
+      email: "hello@blochaussheffield.uk",
+      phoneNumber: "0114-234-9876",
+    },
+    {
+      name: "The Climbing Hangar Liverpool",
+      location: "Liverpool, England",
+      description: "Friendly bouldering gym with a wide variety of problems and regular events for all levels.",
+      email: "contact@hangarliverpool.co.uk",
+      phoneNumber: "0151-555-1032",
+    },
+    {
+      name: "Redpoint Bristol",
+      location: "Bristol, England",
+      description: "Indoor climbing gym offering rope climbing, bouldering, yoga classes, and coaching for adults and juniors.",
+      email: "info@redpointbristol.co.uk",
+      phoneNumber: "0117-321-3321",
+    },
+    {
+      name: "The Project Climbing Centre",
+      location: "Poole, England",
+      description: "Well-equipped bouldering gym located inside the Dolphin Centre with excellent community vibes.",
+      email: "team@projectclimbing.uk",
+      phoneNumber: "01202-555-600",
+    },
+    {
+      name: "Parthian Climbing Manchester",
+      location: "Manchester, England",
+      description: "Premier climbing centre offering lead, top rope, speed climbing, bouldering, and coaching programmes.",
+      email: "info@parthianmanchester.uk",
+      phoneNumber: "0161-789-1122",
+    },
+    {
+      name: "The Arch North",
+      location: "London, England",
+      description: "High-quality bouldering gym with a focus on dynamic setting and strong community culture.",
+      email: "support@thearchnorth.co.uk",
+      phoneNumber: "020-8080-9876",
+    },
+    {
+      name: "Rock Over Climbing",
+      location: "Manchester, England",
+      description: "Expansive indoor centre with bouldering, training boards, and a kids' climbing zone.",
+      email: "hello@rockoverclimbing.co.uk",
+      phoneNumber: "0161-200-1234",
+    },
+    {
+      name: "Boulder Brighton",
+      location: "Brighton, England",
+      description: "Popular bouldering venue with regular route resets, coaching, and a relaxing café.",
+      email: "info@boulderbrighton.uk",
+      phoneNumber: "01273-555-666",
+    },
+    {
+      name: "Glasgow Climbing Centre",
+      location: "Glasgow, Scotland",
+      description: "Converted church offering top rope, lead, bouldering, and aerial classes in a stunning venue.",
+      email: "contact@glasgowclimbing.co.uk",
+      phoneNumber: "0141-222-9000",
+    },
+    {
+      name: "TCA The Newsroom",
+      location: "Bristol, England",
+      description: "The Climbing Academy's flagship bouldering gym with a wide range of routes and training equipment.",
+      email: "info@tcanewsroom.uk",
+      phoneNumber: "0117-500-1212",
+    },
+    {
+      name: "Beacon Climbing Centre",
+      location: "Caernarfon, Wales",
+      description: "North Wales' largest climbing centre with tall walls, bouldering, CrazyClimb, and a café.",
+      email: "support@beaconclimbing.co.uk",
+      phoneNumber: "01286-555-777",
+    },
+    {
+      name: "Ratho – Edinburgh International Climbing Arena",
+      location: "Edinburgh, Scotland",
+      description: "Europe's largest indoor climbing arena with world-class lead, speed, and bouldering facilities.",
+      email: "info@rathoclimbing.uk",
+      phoneNumber: "0131-555-0199",
+    },
+    {
+      name: "Depot Climbing Nottingham",
+      location: "Nottingham, England",
+      description: "Modern bouldering gym with elite training zones, coaching, and large open spaces.",
+      email: "hello@depotnottingham.uk",
+      phoneNumber: "0115-890-1234",
+    },
+    {
+      name: "The Climbing Station",
+      location: "Loughborough, England",
+      description: "Friendly bouldering gym with circuits for all levels and youth development programmes.",
+      email: "info@climbingstation.co.uk",
+      phoneNumber: "01509-888-456",
+    },
+    {
+      name: "The Foundry Climbing Centre",
+      location: "Sheffield, England",
+      description: "Iconic UK climbing gym with roped walls and bouldering, home to many British climbing legends.",
+      email: "support@foundryclimbing.uk",
+      phoneNumber: "0114-276-9999",
+    },
+    {
+      name: "Summit Climbing Centre",
+      location: "Cross Hands, Wales",
+      description: "Community-based climbing gym in South Wales with inclusive activities and coaching.",
+      email: "info@summitcentre.co.uk",
+      phoneNumber: "01269-555-999",
+    },
+    {
+      name: "Big Rock Hub",
+      location: "Milton Keynes, England",
+      description: "Modern roped climbing and bouldering facility with high walls and dynamic routes.",
+      email: "contact@bigrockhub.uk",
+      phoneNumber: "01908-555-432",
+    },
+    {
+      name: "Lakeland Climbing Centre",
+      location: "Kendal, England",
+      description: "Impressive tall wall gym with auto-belays, bouldering, and a stunning mountain location.",
+      email: "info@kendalwall.co.uk",
+      phoneNumber: "01539-720-123",
+    },
+    {
+      name: "Boulder UK",
+      location: "Preston, England",
+      description: "Advanced bouldering gym with a dedicated training area and MoonBoard setup.",
+      email: "support@boulderuk.co.uk",
+      phoneNumber: "01772-999-888",
+    },
+  ];
+
+  // Actually seed the ClimbingGyms to the database
+  await prisma.climbingGym.createMany({
+    data: gyms,
+    skipDuplicates: true, // This prevents errors if records already exist
+  });
+
+  console.log("✅ ClimbingGyms seeded (created or updated)");
 }
 
 main()
   .catch((e) => {
-    console.error(e);
+    console.error("Error during seeding:", e);
     process.exit(1);
   })
   .finally(async () => {
