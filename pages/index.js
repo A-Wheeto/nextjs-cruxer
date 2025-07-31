@@ -41,11 +41,11 @@ export default function Home() {
       <section className={`${styles.home_section} py-4 text-center rounded-3`}>
         <div className="container">
           <h3 className="display-8">
-            Don’t Just Climb. Cruxer It.
+            Don't Just Climb. Cruxer It.
           </h3>
           <p>
             Sure, you could keep logging your climbs in a dusty notebook or that weird spreadsheet with 14 tabs... but why not level up?
-            With Cruxer, you’re not just tracking ascents — you’re high-fiving after sends, swapping beta with climbers across the globe, and discovering epic routes you didn’t even know existed. Whether you're crushing plastic at the gym, dancing up sandstone, or flailing (respectfully) on your latest project, Cruxer’s got your back.
+            With Cruxer, you're not just tracking ascents — you're high-fiving after sends, swapping beta with climbers across the globe, and discovering epic routes you didn't even know existed. Whether you're crushing plastic at the gym, dancing up sandstone, or flailing (respectfully) on your latest project, Cruxer's got your back.
           </p>
           <p className="fw-bold mb-0">
             Connect. Climb. Celebrate. Repeat.
