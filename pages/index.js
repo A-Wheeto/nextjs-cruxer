@@ -3,26 +3,9 @@ import Image from "next/image";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
 import Card from "@/components/ui/Card";
-import { PrismaClient } from "@prisma/client";
+import homePageCards from "../data/homePageCards.json";
 
-const prisma = new PrismaClient();
-
-export async function getServerSideProps() {
-  const cards = await prisma.homePageCard.findMany({
-    orderBy: {createdAt: "asc"}
-  });
-
-  const serializedCards = cards.map(card => ({
-    ...card,
-    createdAt: card.createdAt.toISOString(),
-  }));
-
-  return {
-    props: { cards: serializedCards },
-  }
-}
-
-export default function Home({ cards }) {
+export default function Home() {
   return (
     <>
       <Head>
@@ -43,8 +26,8 @@ export default function Home({ cards }) {
       </section>
 
       <section className="row mt-2 g-4 mb-4">
-        {cards.map((card) => (
-          <div key={card.id} className="col-12 col-md-4 card-group">
+        {homePageCards.map((card, index) => (
+          <div key={index} className="col-12 col-md-4 card-group">
             <Card
               title={card.title}
               description={card.description}
@@ -57,9 +40,16 @@ export default function Home({ cards }) {
 
       <section className={`${styles.home_section} py-4 text-center rounded-3`}>
         <div className="container">
-          <h3 className="display-8 mb-0">
-            Some more text about climbing and how cool it is.
+          <h3 className="display-8">
+            Don’t Just Climb. Cruxer It.
           </h3>
+          <p>
+            Sure, you could keep logging your climbs in a dusty notebook or that weird spreadsheet with 14 tabs... but why not level up?
+            With Cruxer, you’re not just tracking ascents — you’re high-fiving after sends, swapping beta with climbers across the globe, and discovering epic routes you didn’t even know existed. Whether you're crushing plastic at the gym, dancing up sandstone, or flailing (respectfully) on your latest project, Cruxer’s got your back.
+          </p>
+          <p className="fw-bold mb-0">
+            Connect. Climb. Celebrate. Repeat.
+          </p>            
         </div>
       </section>
     </>
