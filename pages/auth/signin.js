@@ -89,7 +89,7 @@ export default function SignIn() {
             </form>
 
             <div className="text-center mt-3">
-              <p>Don't have an account? <Link href="/auth/signup">Sign up</Link></p>
+              <p>{"Don't have an account?"} <Link href="/auth/signup">Sign up</Link></p>
             </div>
           </div>
         </div>
