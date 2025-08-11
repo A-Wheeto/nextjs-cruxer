@@ -18,7 +18,8 @@ export default function Profile({ user: initialUser }) {
           currentImage={user.image} 
           onImageUpdate={handleImageUpdate}
         />
-        <p className="text-body-secondary mt-5 mb-0">Username</p>
+        <hr />
+        <p className="text-body-secondary mt-3 mb-0">Username</p>
         <p className="fs-2">{user.username}</p>
         <p className="text-body-secondary mt-2 mb-0">Full Name</p>
         <p className="fs-2">{user.name}</p>

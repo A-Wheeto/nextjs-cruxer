@@ -3,14 +3,20 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "./auth/[...nextauth]"
 import { PrismaClient } from "@prisma/client"
 import formidable from 'formidable'
-import fs from 'fs'
-import path from 'path'
+import { v2 as cloudinary } from 'cloudinary'
 
 const prisma = new PrismaClient()
 
+// Configure Cloudinary with your credentials
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: false, // Disable Next.js body parsing
   },
 }
 
@@ -19,6 +25,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
+  // Check if user is authenticated
   const session = await getServerSession(req, res, authOptions)
   
   if (!session?.user?.email) {
@@ -26,17 +33,11 @@ export default async function handler(req, res) {
   }
 
   try {
+    // Parse the uploaded file using formidable
     const form = formidable({
-      uploadDir: './public/uploads',
-      keepExtensions: true,
       maxFileSize: 5 * 1024 * 1024, // 5MB limit
+      keepExtensions: true,
     })
-
-    // Create uploads directory if it doesn't exist
-    const uploadDir = './public/uploads'
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true })
-    }
 
     const [fields, files] = await form.parse(req)
     const file = files.avatar?.[0]
@@ -45,32 +46,48 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'No file uploaded' })
     }
 
-    // Check file type
+    // Validate file type
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
     if (!allowedTypes.includes(file.mimetype)) {
-      fs.unlinkSync(file.filepath) // Delete uploaded file
-      return res.status(400).json({ error: 'Invalid file type' })
+      return res.status(400).json({ error: 'Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.' })
     }
 
-    // Generate unique filename
-    const timestamp = Date.now()
-    const extension = path.extname(file.originalFilename || '')
-    const filename = `avatar-${session.user.id}-${timestamp}${extension}`
-    const newPath = path.join('./public/uploads', filename)
-
-    // Move file to final location
-    fs.renameSync(file.filepath, newPath)
-
-    // Update user in database
-    const imageUrl = `/uploads/${filename}`
-    await prisma.user.update({
-      where: { email: session.user.email },
-      data: { image: imageUrl },
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(file.filepath, {
+      folder: 'user-avatars', // Organize uploads in folders
+      public_id: `user-${session.user.id || session.user.email.replace('@', '-')}-${Date.now()}`,
+      transformation: [
+        { width: 400, height: 400, crop: 'fill', gravity: 'face' }, // Smart crop focusing on faces
+        { quality: 'auto:good' }, // Automatic quality optimization
+        { format: 'auto' } // Automatic format selection (WebP for modern browsers)
+      ],
+      overwrite: true, // Replace existing file with same public_id
     })
 
-    res.status(200).json({ imageUrl })
+    // Update user's avatar in database
+    const updatedUser = await prisma.user.update({
+      where: { email: session.user.email },
+      data: { image: result.secure_url },
+    })
+
+    // Return the new image URL
+    res.status(200).json({ 
+      success: true,
+      imageUrl: result.secure_url,
+      message: 'Avatar updated successfully'
+    })
+
   } catch (error) {
     console.error('Upload error:', error)
-    res.status(500).json({ error: 'Upload failed' })
+    
+    // Handle specific Cloudinary errors
+    if (error.message.includes('File size too large')) {
+      return res.status(400).json({ error: 'File size too large. Maximum 5MB allowed.' })
+    }
+    
+    res.status(500).json({ error: 'Upload failed. Please try again.' })
+  } finally {
+    // Close Prisma connection
+    await prisma.$disconnect()
   }
 }

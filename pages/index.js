@@ -17,11 +17,9 @@ export default function Home() {
       
       <section className={`${styles.home_section} py-4 text-center rounded-3`}>
         <div className="container">
-          <h1 className="display-4 fw-bold">C R U <span className={`${styles.title_x}`}>&#10007;</span> E R</h1>
-          <h3 className="display-8 mb-4">
-            {"Cruxer is the ultimate social app for climbers. Track your ascents, connect with other climbers, and discover new routes — all in one place."}
-          </h3>
-          <Link href="/auth/signup" className={`${styles.link} px-5 py-2 mt-4 fw-bold`}>Join the Community</Link>
+          <Image src="/images/cruxer-logo.png" width={405} height={428} className="mb-3 img-fluid" />
+          <br />
+          <Link href="/auth/signup" className={`${styles.link} px-5 py-2 mt-4 fw-bold fs-3 text-nowrap`}>Join the Community</Link>
         </div>
       </section>
 
