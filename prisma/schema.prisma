@@ -45,8 +45,16 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?   // Added for credentials auth
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Auth relations
   accounts      Account[]
   sessions      Session[]
+  
+  // App relations
+  routes        Route[]
+  comments      Comment[]
 }
 
 model VerificationToken {
@@ -57,21 +65,44 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model HomePageCard {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  link        String
-  image       String
-  createdAt   DateTime @default(now())
+model Route {
+  id          String    @id @default(cuid())
+  name        String
+  location    String
+  grade       String
+  type        RouteType
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  createdBy   String
+  user        User      @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  comments    Comment[]
+  
+  @@map("routes")
 }
 
-model ClimbingGym {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  location    String
-  description String
-  email       String   @unique
-  phoneNumber String
-  createdAt   DateTime @default(now())
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  routeId   String
+  route     Route    @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("comments")
+}
+
+enum RouteType {
+  SPORT
+  TRAD
+  BOULDER
+  TOPROPE
+  AID
+  ALPINE
 }
