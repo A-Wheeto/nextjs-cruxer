@@ -138,7 +138,7 @@ export default function AvatarUpload({ currentImage, onImageUpdate }) {
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={uploading}
-          className={`btn btn-outline-primary ${uploading ? 'disabled' : ''}`}
+          className={`btn ${styles.customFileUpload} ${uploading ? 'disabled' : ''}`}
         >
           {uploading ? (
             <>
