@@ -16,10 +16,18 @@ export default function Home() {
       </Head>
       
       <section className={`${styles.home_section} py-4 text-center rounded-3`}>
-        <div className="container">
-          <Image src="/images/cruxer-logo.png" width={405} height={428} className="mb-3 img-fluid" />
-          <br />
-          <Link href="/auth/signup" className={`${styles.link} px-5 py-2 mt-4 fw-bold fs-3 text-nowrap`}>Join the Community</Link>
+        <div className="container px-5 d-flex flex-column flex-lg-row justify-content-around align-items-center gap-2 gap-lg-5">
+          <div>
+            <Image src="/images/cruxer-logo.png" width={305} height={328} className="img-fluid" />
+          </div>
+          <div className="d-flex align-items-center">
+            <h4 className="mb-0">Cruxer is where climbers and boulderers come together. Share your sends, swap beta, connect with partners, and explore the best problems and routes, from your local gym to epic outdoor crags.</h4>
+          </div>
+          <div>
+            <Link href="/auth/signup" className={`${styles.join_button}`}>
+              Join the Community
+            </Link>
+          </div>
         </div>
       </section>
 

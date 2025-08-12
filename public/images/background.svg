@@ -1,0 +1,44 @@
+<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Main background gradient from white to green -->
+    <linearGradient id="skyToGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#f8fffe;stop-opacity:0.9" />
+      <stop offset="70%" style="stop-color:#e8f5f0;stop-opacity:0.7" />
+      <stop offset="100%" style="stop-color:#357960;stop-opacity:0.3" />
+    </linearGradient>
+    
+    <!-- Mountain gradients for depth -->
+    <linearGradient id="mountain1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#357960;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#2d6651;stop-opacity:0.6" />
+    </linearGradient>
+    
+    <linearGradient id="mountain2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#357960;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#2d6651;stop-opacity:0.5" />
+    </linearGradient>
+    
+    <linearGradient id="mountain3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#357960;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#2d6651;stop-opacity:0.4" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main background fade -->
+  <rect width="100%" height="100%" fill="url(#skyToGreen)"/>
+  
+  <!-- Back mountain layer (furthest) -->
+  <path d="M0,580 L180,450 L320,500 L480,430 L620,470 L780,410 L920,450 L1200,390 L1200,600 L0,600 Z" 
+        fill="url(#mountain3)"/>
+  
+  <!-- Middle mountain layer -->
+  <path d="M0,620 L150,520 L290,560 L420,480 L580,530 L720,460 L860,510 L1000,450 L1200,490 L1200,600 L0,600 Z" 
+        fill="url(#mountain2)"/>
+  
+  <!-- Front mountain layer (closest) -->
+  <path d="M0,650 L120,580 L250,610 L380,550 L520,600 L650,540 L780,570 L920,530 L1080,560 L1200,540 L1200,600 L0,600 Z" 
+        fill="url(#mountain1)"/>
+  
+
+</svg>
